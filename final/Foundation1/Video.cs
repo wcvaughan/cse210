@@ -25,7 +25,7 @@ public class Video
     {
         foreach (Comment c in comments)
         {
-            Console.WriteLine($"User: {c.Name} Comment: {c.CommentText}");
+            Console.WriteLine($"User: {c._name} Comment: {c._commentText}");
         }
     }
 }
