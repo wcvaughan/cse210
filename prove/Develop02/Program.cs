@@ -38,7 +38,15 @@ class Program
     {
         Console.WriteLine("Please enter the name of the journal you wish to open:");
         string userJournal = Console.ReadLine();
-        string journalFile = @"C:\Users\chris\OneDrive\Documents\GitHub\cse210\prove\Develop02\" + userJournal + ".csv";
+        string documentsFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        string journalDirectory = Path.Combine(documentsFolder, "MyJournalApp", "Journals");
+
+        if (!Directory.Exists(journalDirectory))
+        {
+            Directory.CreateDirectory(journalDirectory);
+        }
+
+        string journalFile = Path.Combine(journalDirectory, userJournal + ".csv");
 
         newJournal.LoadFromFile(journalFile);
 
@@ -49,7 +57,14 @@ class Program
     {
         Console.WriteLine("Please enter a name for your new journal:");
         string userJournal = Console.ReadLine();
-        string journalFile = @"C:\Users\chris\OneDrive\Documents\GitHub\cse210\prove\Develop02\" + userJournal + ".csv";
+        string documentsFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        string journalDirectory = Path.Combine(documentsFolder, "MyJournalApp", "Journals");
+
+        if (!Directory.Exists(journalDirectory))
+        {
+            Directory.CreateDirectory(journalDirectory);
+        }
+        string journalFile = Path.Combine(journalDirectory, userJournal + ".csv");
 
         DisplayJournalMenu(newJournal, newPrompt, journalFile);
     }
