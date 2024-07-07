@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.Json;
 
 public class Journal
 {
@@ -28,17 +29,10 @@ public class Journal
     }
     public void SaveToFile(string filename)
     {
-        using (StreamWriter outputFile = new StreamWriter(filename))
-        {
-            // Write the header line
-            outputFile.WriteLine("Date,Prompt,Content");
-            foreach (Entry entry in _entries)
-            {
-                // Write each entry as a CSV line
-                string csvLine = $"{entry._entryDate},{entry._entryPrompt},{entry._entryContent}";
-                outputFile.WriteLine(csvLine);
-            }
-        }
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        string jsonString = JsonSerializer.Serialize(_entries, options);
+        File.WriteAllText(filename, jsonString);
+        Console.WriteLine($"Journal saved to {filename}");
         Console.WriteLine($"Journal saved to {filename}");
     }
     public void LoadFromFile(string filename)
@@ -46,24 +40,8 @@ public class Journal
         _entries.Clear();
         if (File.Exists(filename))
         {
-            string[] lines = File.ReadAllLines(filename);
-            for (int i = 1; i < lines.Length; i++) // Start from 1 to skip the header
-            {
-                string[] parts = lines[i].Split(',');
-
-                // Handle potential issues with CSV parsing (e.g., commas within fields)
-                if (parts.Length == 3)
-                {
-                    Entry entry = new Entry
-                    {
-                        _entryDate = parts[0],
-                        _entryPrompt = parts[1],
-                        _entryContent = parts[2]
-                    };
-                    _entries.Add(entry);
-                }
-            }
-
+            string jsonString = File.ReadAllText(filename);
+            _entries = JsonSerializer.Deserialize<List<Entry>>(jsonString);
             Console.WriteLine($"Journal loaded from {filename}");
         }
         else
