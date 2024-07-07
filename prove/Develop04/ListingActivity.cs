@@ -31,7 +31,7 @@ public class ListingActivity : Activity
         Thread.Sleep(3000);
 
         DateTime startTime = DateTime.Now;
-        DateTime endTime = startTime.AddSeconds(_activityDuration);
+        DateTime endTime = startTime.AddSeconds(ActivityDuration);
         while (DateTime.Now < endTime)
         {
             GetListFromUser();
