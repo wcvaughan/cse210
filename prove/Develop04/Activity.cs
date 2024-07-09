@@ -2,10 +2,27 @@ using System.Diagnostics;
 
 public class Activity
 {
-    protected string _activityName { get; set;}
-    protected string _activityDescription { get; set;}
-    protected int _activityDuration { get; set;}
+    protected string _activityName;
+    protected string _activityDescription;
+    protected int _activityDuration;
 
+    protected string ActivityName
+    {
+        get => _activityName;
+        set => _activityName = value;
+    }
+
+    protected string ActivityDescription
+    {
+        get => _activityDescription;
+        set => _activityDescription = value;
+    }
+
+    protected int ActivityDuration
+    {
+        get => _activityDuration;
+        set => _activityDuration = value;
+    }
     public Activity(string activityName, string activityDescription, int activityDuration)
     {
         _activityName = activityName;

@@ -46,7 +46,7 @@ class Program
             Directory.CreateDirectory(journalDirectory);
         }
 
-        string journalFile = Path.Combine(journalDirectory, userJournal + ".csv");
+        string journalFile = Path.Combine(journalDirectory, userJournal + ".json");
 
         newJournal.LoadFromFile(journalFile);
 
@@ -64,7 +64,7 @@ class Program
         {
             Directory.CreateDirectory(journalDirectory);
         }
-        string journalFile = Path.Combine(journalDirectory, userJournal + ".csv");
+        string journalFile = Path.Combine(journalDirectory, userJournal + ".json");
 
         DisplayJournalMenu(newJournal, newPrompt, journalFile);
     }

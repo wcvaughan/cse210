@@ -43,7 +43,7 @@ public class BreathingActivity : Activity
     public void BreathInAnimation(string[] frames)
     {
         DateTime startTime = DateTime.Now;
-        DateTime endTime = startTime.AddSeconds(_activityDuration);
+        DateTime endTime = startTime.AddSeconds(ActivityDuration);
         while (DateTime.Now < endTime)
         {
             foreach (string frame in frames)
