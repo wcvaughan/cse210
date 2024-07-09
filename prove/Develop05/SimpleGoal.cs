@@ -1,21 +1,36 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
+[JsonConverter(typeof(GoalConverter))]
 public class SimpleGoal : Goal
 {
-    public bool _isComplete;
-    public SimpleGoal(string name, string description, string points, bool isComplete)
-     : base("Simple Goal", description, points)
-    {
-        _isComplete = isComplete;
-    }
-    public void RecordEvent()
-    {
+    public bool IsCompleted { get; set; } // Renamed property to avoid conflict
 
-    }
-    public bool IsComplete()
+    public SimpleGoal(string shortName, string description, int points, bool isCompleted)
     {
-        return _isComplete;
+        ShortName = shortName;
+        Description = description;
+        Points = points;
+        IsCompleted = isCompleted;
     }
-    public string GetStringRepresentation()
+
+    public override void RecordEvent()
     {
-        return $"";
+        IsCompleted = true;
+    }
+
+    public override bool IsComplete() => IsCompleted;
+
+    public override string GetDetailsString()
+    {
+        return $"[Simple Goal] {ShortName}: {Description} - {Points} points - Completed: {IsCompleted}";
+    }
+
+    public override string GetStringRepresentation()
+    {
+        return $"SimpleGoal|{ShortName}|{Description}|{Points}|{IsCompleted}";
     }
 }

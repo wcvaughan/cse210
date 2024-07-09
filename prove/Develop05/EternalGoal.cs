@@ -1,20 +1,30 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
+[JsonConverter(typeof(GoalConverter))]
 public class EternalGoal : Goal
 {
     public EternalGoal(string name, string description, string points)
-     : base("Eternal Goal", description, points)
+        : base(name, description, points)
     {
-
     }
-    public void RecordEvent()
+    public override void RecordEvent()
     {
-
+        Console.WriteLine("Progress recorded for eternal goal. Keep it up!");
     }
-    public bool IsComplete()
+    public override bool IsComplete()
     {
-        return false;
+        return false; //never complete
     }
-    public string GetStringRepresentation()
+    public override string GetDetailsString()
     {
-        return "";
+        return $"{ShortName}: {Description}, Points: {Points} (Eternal)";
+    }
+    public override string GetStringRepresentation()
+    {
+        return $"EternalGoal,{ShortName},{Description},{Points}";
     }
 }

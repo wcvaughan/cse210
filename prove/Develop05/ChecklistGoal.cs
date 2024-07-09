@@ -1,29 +1,47 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
+[JsonConverter(typeof(GoalConverter))]
 public class ChecklistGoal : Goal
 {
-    public int _amountCompleted;
-    public int _target;
-    public int _bonus;
+    public int AmountCompleted { get; private set; }
+    public int Target { get; }
+    public int Bonus { get; }
+    
     public ChecklistGoal(string name, string description, string points, int target, int bonus)
-     : base("Checklist Goal", description, points)
-     {
-        _target = target;
-        _bonus = bonus;
-     }
-     public void RecordEvent()
-     {
+        : base(name, description, points)
+    {
+        Target = target;
+        Bonus = bonus;
+        AmountCompleted = 0;
+    }
 
-     }
-     public bool IsComplete()
+    public override void RecordEvent()
+    {
+        AmountCompleted++;
+        if (IsComplete())
+        {
+            Console.WriteLine($"Congratulations! You've completed the checklist goal and earned {Points} points plus a bonus of {Bonus} points.");
+        }
+        else
+        {
+            Console.WriteLine($"Progress made on checklist goal: {AmountCompleted}/{Target}.");
+        }
+    }
+     public override bool IsComplete()
      {
-        return false;
+        return AmountCompleted >= target;
      }
-     public string GetDetailsString()
+     public override string GetDetailsString()
      {
-        return "";
+        return $"{ShortName}: {Description}, Points: {Points}, Completed: {AmountCompleted}/{Target}, Bonus: {Bonus}";
      }
-     public string GetStringRepresentation()
+     public override string GetStringRepresentation()
      {
-        return "";
+        return $"ChecklistGoal,{ShortName},{Description},{Points},{Target},{Bonus},{AmountCompleted}";
      }
 
 }

@@ -1,29 +1,25 @@
-public class Goal
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
+[JsonConverter(typeof(GoalConverter))]
+public abstract class Goal
 {
-    public string _shortName;
-    public string _description;
-    public string _points;
-    public Goal(string name, string description, string points)
+    public string ShortName { get; set; }
+    public string Description { get; set; }
+    public int Points { get; set; }
+
+    protected Goal(string shortName, string description, int points)
     {
-        _shortName = name;
-        _description = description;
-        _points = points;
+        ShortName = shortName;
+        Description = description;
+        Points = points;
     }
 
-    public void RecordEvent()
-    {
-        
-    }
-    public bool IsComplete()
-    {
-        return false;
-    }
-    public string GetDetailsString()
-    {
-        return "";
-    }
-    public string GetStringRepresentation()
-    {
-        return "";
-    }
+    public abstract void RecordEvent();
+    public abstract bool IsComplete();
+    public abstract string GetDetailsString();
+    public abstract string GetStringRepresentation();
 }
