@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-
-[JsonConverter(typeof(GoalConverter))]
 public abstract class Goal
 {
     public string ShortName { get; set; }

@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-
-[JsonConverter(typeof(GoalConverter))]
 public class SimpleGoal : Goal
 {
     public bool IsCompleted { get; set; } // Renamed property to avoid conflict
 
     public SimpleGoal(string shortName, string description, int points, bool isCompleted)
+     : base(shortName, description, points)
     {
         ShortName = shortName;
         Description = description;

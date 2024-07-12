@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-
-[JsonConverter(typeof(GoalConverter))]
 public class EternalGoal : Goal
 {
-    public EternalGoal(string name, string description, string points)
+    public EternalGoal(string name, string description, int points)
         : base(name, description, points)
     {
     }

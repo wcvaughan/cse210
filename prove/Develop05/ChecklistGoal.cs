@@ -4,14 +4,13 @@ using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-[JsonConverter(typeof(GoalConverter))]
 public class ChecklistGoal : Goal
 {
     public int AmountCompleted { get; private set; }
     public int Target { get; }
     public int Bonus { get; }
     
-    public ChecklistGoal(string name, string description, string points, int target, int bonus)
+    public ChecklistGoal(string name, string description, int points, int target, int bonus)
         : base(name, description, points)
     {
         Target = target;
@@ -33,7 +32,7 @@ public class ChecklistGoal : Goal
     }
      public override bool IsComplete()
      {
-        return AmountCompleted >= target;
+        return AmountCompleted >= Target;
      }
      public override string GetDetailsString()
      {

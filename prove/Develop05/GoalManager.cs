@@ -96,10 +96,10 @@ public class GoalManager
             switch (choice)
             {
                 case 1:
-                    newGoal = new SimpleGoal(name, description, points);
+                    newGoal = new SimpleGoal(name, description, int.Parse(points), false);
                     break;
                 case 2:
-                    newGoal = new EternalGoal(name, description, points);
+                    newGoal = new EternalGoal(name, description, int.Parse(points));
                     break;
                 case 3:
                     Console.Write("What is the target for the checklist goal? ");
@@ -108,7 +108,7 @@ public class GoalManager
                         Console.Write("What is the bonus for completing the checklist goal? ");
                         if (int.TryParse(Console.ReadLine(), out int bonus))
                         {
-                            newGoal = new ChecklistGoal(name, description, points, target, bonus);
+                            newGoal = new ChecklistGoal(name, description, int.Parse(points), target, bonus);
                         }
                         else
                         {
@@ -149,15 +149,15 @@ public class GoalManager
 
             if (goal is ChecklistGoal checklistGoal && checklistGoal.IsComplete())
             {
-                Score += int.Parse(goal.Points) + checklistGoal.Bonus;
+                Score += goal.Points + checklistGoal.Bonus;
             }
             else if (goal is SimpleGoal simpleGoal && simpleGoal.IsComplete())
             {
-                Score += int.Parse(goal.Points);
+                Score += goal.Points;
             }
             else if (goal is EternalGoal)
             {
-                Score += int.Parse(goal.Points);
+                Score += goal.Points;
             }
         }
         else
@@ -172,19 +172,24 @@ public class GoalManager
     {
         Console.WriteLine("What is the name for your save?");
         string userSaveFile = Console.ReadLine();
-        string jsonString = JsonSerializer.Serialize();
+        string jsonString = JsonSerializer.Serialize(_goals, new JsonSerializerOptions { WriteIndented = true });
         File.WriteAllText(userSaveFile, jsonString);
         Console.WriteLine($"File saved as {userSaveFile}.");
-
     }
+
     public void LoadGoals()
     {
         Console.WriteLine("What is the name of the file you want to load?");
-        string userLoadFile = Console.ReadLine(); 
+        string userLoadFile = Console.ReadLine();
         if (File.Exists(userLoadFile))
         {
             string jsonString = File.ReadAllText(userLoadFile);
-            var readVariable = JsonSerializer.Deserialize</*DATA MODEL*/>(jsonString);
+            _goals = JsonSerializer.Deserialize<List<Goal>>(jsonString, new JsonSerializerOptions { Converters = { new GoalConverter() } });
+            Console.WriteLine("Goals loaded successfully.");
+        }
+        else
+        {
+            Console.WriteLine("File not found.");
         }
     }
 }
