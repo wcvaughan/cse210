@@ -6,6 +6,11 @@ public class Swimming : Activity
     {
         _lapCount = lapCount;
     }
+
+    public void Run()
+    {
+        
+    }
     public override int GetDistance()
     {
         return base.GetDistance();

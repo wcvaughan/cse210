@@ -4,6 +4,11 @@ public class Cycling : Activity
     {
 
     }
+
+    public void Run()
+    {
+        
+    }
     public override int GetSpeed(int distance, int duration)
     {
         return base.GetSpeed(distance, duration);

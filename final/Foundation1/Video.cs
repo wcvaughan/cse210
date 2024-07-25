@@ -21,7 +21,7 @@ public class Video
         Console.WriteLine();
         Console.WriteLine($"Title: {_title} Author: {_author} Length: {_length} seconds");
     }
-        public void DisplayComments()
+    public void DisplayComments()
     {
         foreach (Comment c in comments)
         {
